@@ -22,11 +22,11 @@ class Event(object): #Python 2.x compatibility
         self.baseProps = inDict # Hey, it's the most straightforward way and basically achieves the purpose
         # Could also use setattr, but...
         # Should be: 
-        # list(string) phase <- sets which phases the event is valid for (day, night, etc.). If this is not set, it is assumed it is always valid.
+        # list(string) optional phase <- sets which phases the event is valid for (day, night, etc.). If this is not set, it is assumed it is always valid.
         # float mainWeight, float optional participantWeight, float optional victimWeight,
-        # int optional numParticipants, int optional numVictims, dict (string: float) mainModifiers,
+        # int optional numParticipants, int optional numVictims, int optional numSponsors, dict (string: float) mainModifiers,
         # int optional numParticipantsExtra, int optional numVictimsExtra, int optional numSponsorsExtra <- if there is some squishiness to the number of participants/victims
-        # dict (string: float) optional participantModifiers, dict (string: float) optional victimModifiers,
+        # dict (string: float) optional participantModifiers, dict (string: float) optional victimModifiers, dict (string: float) optional sponsorModifiers
         # bool optional murder: indicates that an event can cause someone to kill someone, counting as a kill. Should not be used for sponsor kills or deaths with no killer.
         # bool unique, list[string] optional uniqueUsers #at the moment only supports unique contestants performing the event, rather than being the victim etc. This is bad for, say, Mami getting her head eaten.
         # bool itemRequired, string optional necessaryItem
@@ -54,6 +54,8 @@ class Event(object): #Python 2.x compatibility
         # bool optional loveRequiredSponsor, (relation: bool, value:int) optional, neededLoveLevelSponsor
         # bool optional participantFriendRequiredVictim, (relation: bool, value:int) optional, ParticipantNeededFriendLevelVictim
         # bool optional participantLoveRequiredVictim, (relation: bool, value:int) optional, ParticipantNeededLoveLevelVictim
+        # bool murder whether or not deaths in this event should be interpreted as homicide by the kill logger
+        # dict (string: dict(value: flout, all: bool)) - controls which sponsor traits respond to this event, and whether this applies to all participants or just the mainActor
 
         # mainWeight = sets relative probability of rolling event for given character, participantWeight
         # sets probability of any given other contestant getting involved, victimWeight sets probability

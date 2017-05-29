@@ -24,6 +24,10 @@ class Relationship(object):
             self.loveships[contestant1][contestant2] = min(max(random.gauss(0, 2),-5),5)
             self.loveships[contestant2][contestant1] = self.loveships[contestant1][contestant2]
             
+    def aliveOrSponsor(self, contestant):  # Convenience function for checking if contestant is valid/alive
+        contestantKey = str(contestant)
+        return ((contestantKey in self.sponsors) or self.contestants[contestantKey].alive)
+            
     def processTraitEffect(self, event, actor, others):
         if "sponsorInfluence" not in event.baseProps:
             return
@@ -38,14 +42,23 @@ class Relationship(object):
             processSingleTrait(sponsor.secondary_trait, sponsor)
     
     def decay(self, unused_state):
+        # Only decay between alive contestants
         for contestant, contestantFriends in self.friendships.items():
+            if not self.aliveOrSponsor(contestant):
+                continue
             for contestant2 in contestantFriends:
+                if not self.aliveOrSponsor(contestant2):
+                    continue
                 if contestantFriends[contestant2] > 0:
                     contestantFriends[contestant2] -= max(self.settings["relationshipDecay"], 0)
                 if contestantFriends[contestant2] < 0:
                     contestantFriends[contestant2] += max(self.settings["relationshipDecay"], -1)
         for contestant, contestantLoves in self.loveships.items():
+            if not self.aliveOrSponsor(contestant):
+                continue
             for contestant2 in contestantLoves:
+                if not self.aliveOrSponsor(contestant2):
+                    continue
                 if contestantLoves[contestant2] > 0:
                     contestantLoves[contestant2] -= max(self.settings["relationshipDecay"]*0.5, 0)
                 if contestantLoves[contestant2] < 0:
@@ -126,14 +139,14 @@ class Relationship(object):
     def relationsMainWeightCallback(self, actor, baseEventActorWeight, event):
         if "mainFriendEffect" in event.baseProps and event.baseProps["mainFriendEffect"]:
             negOrPos = 1 if event.baseProps["mainNeededFriendLevel"]["relation"] else -1
-            for friendLevel in self.friendships[actor.name].values():
-                if negOrPos*friendLevel >= event.baseProps["mainNeededFriendLevel"]["value"]:
+            for friendName, friendLevel in self.friendships[actor.name].items():
+                if self.aliveOrSponsor(friendName) and negOrPos*friendLevel >= event.baseProps["mainNeededFriendLevel"]["value"]:
                     baseEventActorWeight *= (1+self.settings["relationInfluence"])**event.baseProps["mainFriendEffect"]
                     break
         if "mainLoveEffect" in event.baseProps and event.baseProps["mainLoveEffect"]:
             negOrPos = 1 if event.baseProps["mainNeededLoveLevel"]["relation"] else -1
-            for loveLevel in self.loveships[actor.name].values():
-                if negOrPos*loveLevel >= event.baseProps["mainNeededLoveLevel"]["value"]:
+            for loveName, loveLevel in self.loveships[actor.name].items():
+                if self.aliveOrSponsor(loveName) and negOrPos*loveLevel >= event.baseProps["mainNeededLoveLevel"]["value"]:
                     baseEventActorWeight *= (1+self.settings["relationInfluence"])**event.baseProps["mainLoveEffect"]
                     break
         return (baseEventActorWeight, True)

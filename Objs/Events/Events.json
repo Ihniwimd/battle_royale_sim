@@ -1,7 +1,19 @@
-        
 {"EventTemplate": 
     {"phase": ["Day", "Night"],
      "mainWeight": 0.0,
+     "unique": false,
+     "itemRequired": false
+     },
+     "PTSD":
+{"phase": ["Night"],
+     "mainWeight": 0.25,
+     "mainModifiers": {"stability": -1.0},
+     "unique": false,
+     "itemRequired": false
+     },
+"Sleep": 
+    {"phase": ["Night"],
+     "mainWeight": 1.0,
      "unique": false,
      "itemRequired": false
      },
@@ -57,11 +69,11 @@
      },
 "ShareStoryofLife":
     {"phase": ["Night"],
-     "mainWeight": 0.5,
+     "mainWeight": 0.75,
      "mainModifiers": {"gregariousness": 1.0,
                        "loneliness": 1.0,
                        "friendliness": 1.0},
-     "participantWeight": 1,
+     "participantWeight": 0.75,
      "numParticipants": 1,
      "participantModifiers": {"gregariousness": 1.0,
                        "loneliness": 1.0,
@@ -91,6 +103,28 @@
                           "Pacifist": {"value": -0.5}}
      },
 "AAttacksB":
+    {"phase": ["Day", "Night"],
+     "mainWeight": 1.5,
+     "mainModifiers": {"ruthlessness": 1.0,
+                    "aggression": 1.0},
+     "victimWeight": 1,
+     "numVictims": 1,
+     "victimModifiers": {"cleverness": -1},
+     "unique": false,
+     "itemRequired": false,
+     "friendEffectVictim": -1.0,
+     "loveEffectVictim": -2.0,
+     "friendRequiredVictim": true,
+     "neededFriendLevelVictim": {"relation": false, "value": 5},
+     "loveRequiredVictim": true,
+     "neededLoveLevelVictim": {"relation": false, "value": 4},
+     "murder": true,
+     "sponsorInfluence": {"Gladiatorial": {"value": 1.0},
+                          "Bloodthirsty": {"value": 1.0, "all": false},
+                          "Senate": {"value": 0.5, "all": false},
+                          "Pacifist": {"value": -1.0, "all": false}}
+     },
+"AAmbushesB":
     {"phase": ["Day", "Night"],
      "mainWeight": 1.5,
      "mainModifiers": {"ruthlessness": 1.0,
@@ -287,10 +321,10 @@
      },
    "FindAbandonedBuilding":
     {"phase": ["Day"],
-     "mainWeight": 0.25,
+     "mainWeight": 0.3,
      "mainModifiers": {"survivalism": 1.0,
                        "cleverness": 1.0},
-     "participantWeight": 0.5,
+     "participantWeight": 0.3,
      "numParticipants": 0,
      "numParticipantsExtra": 3,
      "participantModifiers": {"survivalism": 1.0,
@@ -329,9 +363,9 @@
      },
     "ShareIntimateConversation":
     {"phase": ["Night"],
-    "mainWeight": 0.25,
+    "mainWeight": 0.5,
      "mainModifiers": {"loneliness": 2.0},
-     "participantWeight": 1,
+     "participantWeight": 0.5,
      "numParticipants": 1,
      "participantModifiers": {"loneliness": 2.0},
      "unique": false,
@@ -414,7 +448,7 @@
     {"phase": ["Day", "Night"],
     "mainWeight": 0,
      "numParticipants": 1,
-     "participantWeight": 1,
+     "participantWeight": 5,
      "participantModifiers": {"loyalty": 1,
                               "ruthlessness": -1},
      "reverse": true,
@@ -480,7 +514,7 @@
     {"phase": ["Day", "Night"],
      "mainWeight": 10,
      "numParticipants": 1,
-     "participantWeight": 1,
+     "participantWeight": 10,
      "participantModifiers": {"loyalty": 1,
                               "ruthlessness": -1,
                               "survivalism": 0.5},
@@ -583,11 +617,11 @@
      },
     "BetrayPushOffCliff":
     {"phase": ["Day", "Night"],
-    "mainWeight": 0.15,
+    "mainWeight": 0.5,
      "mainModifiers": {"stability": -0.5,
                        "ruthlessness": 2.0,
                        "loyalty": -2.0},
-     "victimWeight": 1,
+     "victimWeight": 0.5,
      "numVictims": 1,
      "victimModifiers": {"loneliness": 0.5,
                          "friendliness": 0.5},
@@ -610,10 +644,10 @@
      },
      "ACooksForB":
     {"phase": ["Day","Night"],
-     "mainWeight": 0.5,
+     "mainWeight": 0.7,
      "mainModifiers": {"gregariousness": 1.0,
                        "survivalism": 1.0},
-     "participantWeight": 1,
+     "participantWeight": 0.7,
      "numParticipants": 1,
      "mainModifiers": {"gregariousness": 1.0,
                        "loneliness": 0.5,
@@ -633,12 +667,12 @@
     },
     "ACooksForBButPoison":
     {"phase": ["Day","Night"],
-     "mainWeight": 0.15,
+     "mainWeight": 0.4,
      "mainModifiers": {"gregariousness": 1.0,
                        "survivalism": 1.0,
                        "ruthlessness": 1.0,
                        "loyalty": -1.0},
-     "participantWeight": 1,
+     "participantWeight": 0.4,
      "numParticipants": 1,
      "mainModifiers": {"gregariousness": 1.0,
                        "loneliness": 0.5,
@@ -659,4 +693,4 @@
                           "Bloodthirsty": {"value": 0.5, "all": false},
                           "Pacifist": {"value": -1.0, "all": false}}
     }
- }
+}
